@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كتيب الايرشب </title>
+    <style>
+        :root {
+            --bg-color: #0f1113;
+            --book-bg: #202225;
+            --page-bg: #2f3136;
+            --text-color: #ffffff;
+            --primary-color: #588157;
+            --accent-red: #ff4d4d;
+            --spine-color: #18191c;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            font-weight: 600;
+        }
+
+        .scene {
+            width: 95vw;
+            height: 90vh;
+            perspective: 3000px;
+            display: flex;
+            justify-content: flex-end; 
+            padding-right: 20px;
+        }
+
+        .book {
+            width: 45vw;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform-origin: right center;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-style: preserve-3d;
+            box-shadow: inset -5px 0px 30px rgba(0,0,0,0.5);
+            border-radius: 15px 5px 5px 15px;
+            z-index: 1;
+        }
+
+        .page-front, .page-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 45px;
+            backface-visibility: hidden;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: var(--page-bg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-back {
+            transform: rotateY(-180deg);
+            background: var(--book-bg);
+            border-radius: 5px 15px 15px 5px;
+        }
+
+        .page.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .spine {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 35px;
+            height: 100%;
+            background: var(--spine-color);
+            z-index: 100;
+            border-radius: 0 10px 10px 0;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.6);
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            opacity: 0.7;
+        }
+        .page-back .page-number { left: auto; right: 20px; }
+
+        h2 { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 0; font-size: 2rem; }
+        .content { font-size: 1.3rem; line-height: 1.8; white-space: pre-line; flex-grow: 1; }
+        
+        .divider {
+            height: 2px;
+            width: 60%;
+            background: var(--primary-color);
+            margin: 20px 0;
+        }
+
+        .note-red { 
+            color: #ffffff;
+            margin-top: 15px; 
+            padding: 15px; 
+            border: 2px solid var(--accent-red); 
+            border-radius: 12px; 
+            background: rgba(255, 77, 77, 0.15);
+            font-weight: 800;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 20px;
+            z-index: 200;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .btn:disabled { background: #4f545c; opacity: 0.5; }
+
+        .footer-rights {
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .footer-rights a { color: var(--primary-color); text-decoration: none; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+<div class="scene">
+    <div class="book">
+        <div class="spine"></div>
+        
+        <div class="page" id="p1" style="z-index: 4;">
+            <div class="page-front" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background: linear-gradient(135deg, #1e2b1e 0%, #2f3136 100%);">
+                <img src="https://www2.0zz0.com/2025/12/22/17/297618659.png" style="max-width: 180px; margin-bottom: 10px;">
+                <h2 style="border:none; margin:0; font-size: 1.5rem;">Ministry of Health</h2>
+                <h1 style="color:var(--primary-color); font-size: 2.2rem; text-align: center; margin: 10px 0;">AirShip HandBook</h1>
+                <div class="divider"></div>
+                <p style="font-size: 1.4rem; text-align: center;">كتيب تدريب وينق الايرشب</p>
+                <div style="margin-top:30px; border:1px solid #666; padding:10px 20px; border-radius:30px;">اضغط على التالي للبدء ⬅️</div>
+                <div class="page-number">1</div>
+            </div>
+            <div class="page-back">
+                <h2>تعريف الوينق</h2>
+                <div class="content">شهادة الطيران وهي عبارة عن شخص يمتلك احترافية بقيادة المروحية و له الصلاحية في مباشرة بعض الحالات بالهيلي</div>
+                <div class="page-number">2</div>
+            </div>
+        </div>
+
+        <div class="page" id="p2" style="z-index: 3;">
+            <div class="page-front">
+                <h2>قوانين الايرشيب</h2>
+                <div class="content" style="font-size: 1.1rem;">
+- يمنع منعًا باتا الاستهتار في القيادة
+- عدم اقتراب من المباني
+- عدم نقل المواطنين الغير مصابين
+- عدم دخول منشآت او ما بين المباني او جسور
+- عدم اقتراب من مواقع اطلاق النار
+- ان يكون ارتفاعك ما بين 50 الى 120 قدم
+- الابتعاد عن ناطحات السحاب بقدر كافي
+- يجب عليك لبس الخاص للوينق
+
+<div class="note-red">ملاحظة : في حال خالفت احد القوانين يتم استدعائك عليها .</div>
+                </div>
+                <div class="page-number">3</div>
+            </div>
+            <div class="page-back">
+                <h2>تعليمات هامة</h2>
+                <div class="content" style="font-size: 1rem;">
+- في حال واجهت كراش او قلتش اثناء قيادتك للإيرشب و معك مواطن و انفجرت لا يتحمل المواطن المسؤولية و يتم معالجته بشكل طبيعي و لا يتم نقله للمشرحه
+- في حال كان التقصير من الطيار بسبب سوء قيادته وانفجرت الإيرشب ، لا يتحمل المواطن فشل قيادة الطيار ، ويتم معالجته بشكل طبيعي ، 
+وبالنسبة للطيار تكون العقوبات أدناه:
+• سحب وينق الإيرشب بشكل كامل.
+• حرمانه من الوينق لمدة رتبة كاملة أو تكون تقديرية لرئاسة الأكاديمية.
+• نقله لوحده للمشرحه وتكفينه.
+
+<div class="note-red">ملاحظة : في حال خالفت احد التعاميم يتم استدعائك عليها .</div>
+                </div>
+                <div class="page-number">4</div>
+            </div>
+        </div>
+
+        <div class="page" id="p3" style="z-index: 2;">
+            <div class="page-front">
+                <h2>تعليمات هامة</h2>
+                <div class="content" style="font-size: 1rem;">
+يمنع منعا باتا المباشرة كوحدة ايرشب بدون الحصول على الونق والعدد المسموح مباشرته من وحدات الايرشب هو كالتالي:
+- في حال وجود 4 وحدات او أقل : 1 ايرشب
+- في حال وجود 5 وحدات : 2 ايرشب
+- في حال وجود من 6 الى 10 وحدات : من 3 الى 4 ايرشب
+- في حال وجود 11 وحده الى 15: من 4 الى 5 ايرشب
+مع زيادة 5 وحدات يتم اضافة 2 ايرشب اخرى
+- في حال احتياج الميدان اكثر من العدد المسموح يجب عليك اخذ اذن من مسؤول الفتره (Commander)
+
+<div class="note-red">ملاحظة : في حال خالفت احد التعاميم يتم استدعائك عليها .</div>
+                </div>
+                <div class="page-number">5</div>
+            </div>
+            <div class="page-back">
+                <div style="text-align:center; flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+                    <h1 style="color:var(--primary-color); margin:0;">Ministry of Health</h1>
+                    <div style="margin-top:20px; line-height:1.8;">
+                        <p>EMS Academy Commander: Rema Alkhaldi</p>
+                        <p>EMS Academy Deputy: Mohammed Abdullah</p>
+                        <p>Supervisor Of EMS Academy: Jory Walton</p>
+                        <p>ALL EMS FTO</p>
+                    </div>
+                </div>
+
+                <div class="footer-rights">
+                    الحقوق محفوظة لوزارة الصحة في سيرفر MT <br>
+                    اعداد نودي | برمجة وتطوير <a href="#" target="_blank">Ali_go</a>
+                </div>
+                <div class="page-number">6</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="controls">
+    <button class="btn" id="prevBtn" onclick="prevPage()" disabled>السابق</button>
+    <button class="btn" id="nextBtn" onclick="nextPage()">التالي</button>
+</div>
+
+<script>
+    let currentLoc = 1;
+    let numOfPapers = 3; // تم تقليل عدد الأوراق لتناسب المحتوى الجديد
+    let maxLoc = numOfPapers + 1;
+
+    function nextPage() {
+        if(currentLoc < maxLoc) {
+            const page = document.getElementById(`p${currentLoc}`);
+            page.classList.add("flipped");
+            page.style.zIndex = currentLoc;
+            currentLoc++;
+            updateButtons();
+        }
+    }
+
+    function prevPage() {
+        if(currentLoc > 1) {
+            currentLoc--;
+            const page = document.getElementById(`p${currentLoc}`);
+            page.classList.remove("flipped");
+            page.style.zIndex = (numOfPapers - currentLoc) + 10;
+            updateButtons();
+        }
+    }
+
+    function updateButtons() {
+        document.getElementById('prevBtn').disabled = (currentLoc === 1);
+        document.getElementById('nextBtn').disabled = (currentLoc === maxLoc);
+    }
+</script>
+
+</body>
+</html>
